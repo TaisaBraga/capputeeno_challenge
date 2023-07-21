@@ -17,11 +17,9 @@ const Header = styled.header`
   height: 80px;
   padding: 20px;
   width: 100%;
-  
-`;
-
-const NavTitle = styled.h1`
-color: #5D5D6D
+  h1 {
+    color: #5D5D6D
+  }
 `;
 
 const NavegateMenu = styled.div`
@@ -31,6 +29,7 @@ input {
   box-shadow: 1px 1px 3px #B5B5B5;
   height: 35px;
   padding: 10px;
+  outline: 0;
   width: 352px;
  
 }
@@ -40,11 +39,11 @@ export const NavegateBar = () => {
   return (
     <Header>
       <div>
-        <NavTitle className={fontTitle.className}>capputeeno</NavTitle>
+        <h1 className={fontTitle.className}>capputeeno</h1>
       </div>
       <NavegateMenu>
         <input type="text" placeholder='Procurando por algo específico?' />
-        <Image src={shoppingBag} alt='shopping-bag-icon' style={{ marginLeft: '25px' }} />
+        <Image src={shoppingBag} alt='shopping-bag-icon' style={{ marginLeft: '25px', cursor: 'pointer' }} />
       </NavegateMenu>
     </Header>
   )
