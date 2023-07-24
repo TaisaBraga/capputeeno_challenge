@@ -1,5 +1,5 @@
 "use client"
-import { NavegateBar } from '@/components/organisms/NavegateBar/NavegateBar'
+import { NavegateBar } from '@/components/organisms/NavegateBar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Saira } from 'next/font/google'

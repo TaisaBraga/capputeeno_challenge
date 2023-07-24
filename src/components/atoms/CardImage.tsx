@@ -15,7 +15,13 @@ width: 256px,
 export const CardImage = (props: ICardImage) => {
   return (
     <DivCard>
-      <Image src={props?.imageUrl} alt={props?.name} layout='responsive' />
+      <Image
+        src={props?.imageUrl}
+        alt={props?.name}
+        layout='responsive'
+        width={50}
+        height={50}
+      />
     </DivCard>
   )
 }

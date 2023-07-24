@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import { Saira_Stencil_One } from 'next/font/google'
-import shoppingBag from '../../../../public/shopping-bag.png'
+import shoppingBag from '../../../public/shopping-bag.png'
 
 const fontTitle = Saira_Stencil_One({
   weight: ['400'],

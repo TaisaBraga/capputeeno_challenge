@@ -13,6 +13,7 @@ import {
 export interface IGetProductsListProps {
   GetAllProducts: IGetAllProducts | undefined;
   LoadingAllProducts: boolean;
+
 }
 
 export const GetProductsListContext = createContext<IGetProductsListProps>(
@@ -23,16 +24,16 @@ export const useGetProductsListContext = () =>
 
 export const GetProductsListProvider = ({ children }: React.PropsWithChildren) => {
 
-  const { data: GetAllProducts, loading: LoadingAllProducts } = useGetAllProductsList({ variables: { page: 1 } });
-
+  const { data: GetAllProducts, loading: LoadingAllProducts } =
+    useGetAllProductsList({ variables: { page: 1 } });
 
   const value = useMemo(
     () => ({
       GetAllProducts,
-      LoadingAllProducts
+      LoadingAllProducts,
     }), [
     GetAllProducts,
-    LoadingAllProducts
+    LoadingAllProducts,
   ])
 
   return (
