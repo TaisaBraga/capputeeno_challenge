@@ -1,9 +1,11 @@
+import { GetProductsListProvider } from '@/context/GetProductsListContext'
 import styles from './page.module.css'
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-
-    </main>
+    <GetProductsListProvider>
+      <main className={styles.main}>
+      </main>
+    </GetProductsListProvider>
   )
 }
