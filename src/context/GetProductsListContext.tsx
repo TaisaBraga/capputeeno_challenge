@@ -1,16 +1,18 @@
-import useGetAllProductsList from "@/hook/useGetAllProductsList";
+"use client"
+import useGetAllProductsList, { IGetAllProducts } from "@/hook/useGetAllProductsList";
 import {
   Dispatch,
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState
 } from "react";
 
 export interface IGetProductsListProps {
-  isProductList: boolean;
-  setIsProductLsit: Dispatch<SetStateAction<boolean>>;
+  GetAllProducts: IGetAllProducts | undefined;
+  LoadingAllProducts: boolean;
 }
 
 export const GetProductsListContext = createContext<IGetProductsListProps>(
@@ -21,13 +23,16 @@ export const useGetProductsListContext = () =>
 
 export const GetProductsListProvider = ({ children }: React.PropsWithChildren) => {
 
-  const [isProductList, setIsProductLsit] = useState<boolean>(false)
+  const { data: GetAllProducts, loading: LoadingAllProducts } = useGetAllProductsList({ variables: { page: 1 } });
 
-  const { data, loading, } = useGetAllProductsList({ variables: { page: 1 } });
 
-  const value = useMemo(() => {
-
-  }, [
+  const value = useMemo(
+    () => ({
+      GetAllProducts,
+      LoadingAllProducts
+    }), [
+    GetAllProducts,
+    LoadingAllProducts
   ])
 
   return (

@@ -11,7 +11,7 @@ query allProducts($perPage: Int!) {
   }
 `
 
-interface IGetAllProducts {
+export interface IGetAllProducts {
   id: number,
   image_url: string,
   name: string,
