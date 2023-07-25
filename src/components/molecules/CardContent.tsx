@@ -9,26 +9,32 @@ export interface ICardContent {
   price: string | ''
 }
 
-const CardContentDiv = styled.div`
-  width: 256px,
-  height: 378px,
-  top: 224px,
-  left: 1024px,
-  border-radius: 8px, 8px, 0px, 0px
+const CardDiv = styled.div`
+
+& p {
+  text-indent: 5%
+}
+
 `
 
 const CardNameProduct = styled.p`
   color: #41414D,
-  font-size: 16px
+  font-size: 16px,
+`
+const Divider = styled.div`
+  background-color: #DCE2E5;
+  margin: 10px;
+  padding: 0.8px
 `
 
 export const CardContent = (props: ICardContent) => {
 
   return (
-    <CardContentDiv>
+    <CardDiv>
       <CardImage imageUrl={props?.imageUrl} name={props?.name} />
       <p>{props?.name}</p>
-      <p>{props?.price}</p>
-    </CardContentDiv>
+      <Divider></Divider>
+      <p style={{ fontWeight: 'bold' }}>{props?.price}</p>
+    </CardDiv>
   )
 }

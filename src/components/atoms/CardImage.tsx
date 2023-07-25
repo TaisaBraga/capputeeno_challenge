@@ -7,21 +7,17 @@ export interface ICardImage {
   name: string | ''
 }
 
-const DivCard = styled.div`
-height: 300px,
-width: 256px,
-`
-
 export const CardImage = (props: ICardImage) => {
   return (
-    <DivCard>
+    <>
       <Image
         src={props?.imageUrl}
         alt={props?.name}
         layout='responsive'
-        width={50}
-        height={50}
+        width={0}
+        height={0}
+        style={{ borderRadius: '8px 8px 0px 0px' }}
       />
-    </DivCard>
+    </>
   )
 }
