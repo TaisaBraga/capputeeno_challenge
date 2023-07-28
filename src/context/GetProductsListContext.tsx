@@ -6,7 +6,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState
 } from "react";
@@ -26,8 +25,10 @@ export const useGetProductsListContext = () =>
 
 export const GetProductsListProvider = ({ children }: React.PropsWithChildren) => {
 
-  const { data: GetAllProducts, loading: LoadingAllProducts } =
-    useGetAllProductsList({ variables: { page: 1 } });
+  const {
+    data: GetAllProducts,
+    loading: LoadingAllProducts
+  } = useGetAllProductsList({ variables: { page: 1 } });
 
   const formatMonetaryValue = useCallback((number: number) => {
     const valueFormatted = number.toLocaleString('pt-BR', {
