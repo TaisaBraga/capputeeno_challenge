@@ -1,4 +1,4 @@
-import { useGetProductsListContext } from '@/context/GetProductsListContext'
+import { useGetProductsListContext } from '@/context/useGetProductsContext'
 import React from 'react'
 import { CardContent } from '../molecules/CardContent'
 import styled from 'styled-components'

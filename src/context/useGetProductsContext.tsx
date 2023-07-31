@@ -10,20 +10,20 @@ import {
   useState
 } from "react";
 
-export interface IGetProductsListProps {
+export interface IGetProductsProps {
   GetAllProducts: IGetAllProducts | undefined;
   LoadingAllProducts: boolean;
 
   formatMonetaryValue: any;
 }
 
-export const GetProductsListContext = createContext<IGetProductsListProps>(
-  {} as unknown as IGetProductsListProps)
+export const useGetProductsContext = createContext<IGetProductsProps>(
+  {} as unknown as IGetProductsProps)
 
-export const useGetProductsListContext = () =>
-  useContext<IGetProductsListProps>(GetProductsListContext)
+export const GetProductsContext = () =>
+  useContext<IGetProductsProps>(useGetProductsContext)
 
-export const GetProductsListProvider = ({ children }: React.PropsWithChildren) => {
+export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
 
   const {
     data: GetAllProducts,
@@ -51,8 +51,8 @@ export const GetProductsListProvider = ({ children }: React.PropsWithChildren) =
   ])
 
   return (
-    <GetProductsListContext.Provider value={value}>
+    <useGetProductsContext.Provider value={value}>
       {children}
-    </GetProductsListContext.Provider>
+    </useGetProductsContext.Provider>
   )
 }

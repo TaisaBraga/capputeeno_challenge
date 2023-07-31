@@ -1,9 +1,8 @@
 "use client"
-import { GetProductsListProvider } from '@/context/GetProductsListContext'
+import { GetProductsProvider } from '@/context/useGetProductsContext'
 import styles from './page.module.css'
 import { ApolloProvider } from '@apollo/client'
 import { client } from '@/lib/apollo'
-import { CardContent } from '@/components/molecules/CardContent'
 import { ProductsList } from '@/components/organisms/ProductsList'
 
 
@@ -12,11 +11,11 @@ import { ProductsList } from '@/components/organisms/ProductsList'
 export default function Home() {
   return (
     <ApolloProvider client={client}>
-      <GetProductsListProvider>
+      <GetProductsProvider>
         <main className={styles.main}>
           <ProductsList />
         </main>
-      </GetProductsListProvider>
+      </GetProductsProvider>
     </ApolloProvider>
   )
 }
