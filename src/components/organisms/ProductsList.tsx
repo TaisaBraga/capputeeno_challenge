@@ -1,4 +1,4 @@
-import { useGetProductsListContext } from '@/context/useGetProductsContext'
+import { useGetProductsContext } from '@/context/useGetProductsContext'
 import React from 'react'
 import { CardContent } from '../molecules/CardContent'
 import styled from 'styled-components'
@@ -21,13 +21,13 @@ const CardContentDiv = styled.div`
 
 
 export const ProductsList = () => {
-  const { GetAllProducts, formatMonetaryValue } = useGetProductsListContext()
+  const { GetAllProducts, formatMonetaryValue } = useGetProductsContext()
 
   return (
     <CardDiv>
       {GetAllProducts?.allProducts?.map((item) => (
         <CardContentDiv key={item.id}>
-          <CardContent imageUrl={item.image_url} name={item.name} price={formatMonetaryValue(item.price_in_cents)} />
+          <CardContent imageUrl={item?.image_url} name={item?.name} price={formatMonetaryValue(item?.price_in_cents)} />
         </CardContentDiv>
       ))}
     </CardDiv>

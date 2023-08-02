@@ -3,13 +3,13 @@ import { gql, QueryResult, useQuery } from '@apollo/client';
 export const ALL_PRODUCTS = gql`
 query Query($perPage: Int) {
   allProducts(perPage: $perPage){
-      id
-      image_url
-      name
-      price_in_cents
+    id
+    image_url
+    name
+    price_in_cents
     
-    }
   }
+}
 `
 
 export interface IGetProducts {

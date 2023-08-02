@@ -2,15 +2,15 @@ import { gql, QueryResult, useQuery } from '@apollo/client';
 
 export const GET_PRODUCT = gql`
 query Query($productId: ID!) {
-    Product(productId: $productId){
-      id
-      name
-      description
-      image_url
-      category
-      price_in_cents
-    }
+  Product(id: $productId){
+    id
+    name
+    description
+    image_url
+    category
+    price_in_cents
   }
+}
 `
 
 export interface IProduct {
@@ -23,7 +23,7 @@ export interface IProduct {
 }
 
 export interface IGetProduct {
-  Product: IGetProduct[]
+  Product: IProduct
 }
 
 export type useGetProduct = {
