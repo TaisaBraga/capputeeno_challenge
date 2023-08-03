@@ -14,8 +14,8 @@ export default function Home() {
     <ApolloProvider client={client}>
       <GetProductsProvider>
         <main className={styles.main}>
-          {/* <ProductsList /> */}
-          <ProductDetails />
+          <ProductsList />
+          {/* <ProductDetails /> */}
         </main>
       </GetProductsProvider>
     </ApolloProvider>
