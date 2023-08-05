@@ -22,13 +22,16 @@ const RightArrowDiv = styled.button`
   height: 2em;
   margin: 0.3em;
   width: 2em;
+  ${({ disabled }) =>
+    disabled
+      ? css` border: none` : css` border: 0.8px solid #CFCFCF`}
+  
 `
 
 const LeftArrowDiv = styled.button`
   align-items: center;
   background-color: #E9E9F0;
   border-radius: 0.3em;
-  border: 0.8px solid rgba(102,94,102,1);;
   box-shadow: 3px 3px 10px -7px rgba(102,94,102,1);
   cursor: pointer;
   display: flex;
@@ -36,6 +39,9 @@ const LeftArrowDiv = styled.button`
   height: 2em;
   margin: 0.3em;
   width: 2em;
+  ${({ disabled }) =>
+    disabled
+      ? css` border: none` : css` border: 0.8px solid #CFCFCF`}
 `
 
 export const Pagination = () => {
@@ -48,7 +54,7 @@ export const Pagination = () => {
 
   return (
     <PaginationDiv>
-      <RightArrowDiv onClick={handlePreviousPage} disabled={isPrevPageDisable}>
+      <RightArrowDiv id='RightArrowId' onClick={handlePreviousPage} disabled={isPrevPageDisable}>
         <Image src={RightArrow} alt='Right Arrow' />
       </RightArrowDiv>
       <LeftArrowDiv onClick={handleNextPageClick} disabled={isNextPageDisable}>

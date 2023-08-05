@@ -70,11 +70,10 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   }, []);
 
   const handlePreviousPage = useCallback(() => {
-    if (isPage !== 1) {
-      setIsPrevPageDisable(false)
-      setIsPage(prev => prev - 1)
-    } else {
+    if (isPage === 1) {
       setIsPrevPageDisable(true)
+    } else {
+      setIsPage(prev => prev - 1)
     }
   }, [isPage]);
 
@@ -95,8 +94,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       setIsNextPageDisable(false)
     }
   }, [isPage])
-
-  console.log('isPAge ---->', isPage)
 
   const value = useMemo(
     () => ({
