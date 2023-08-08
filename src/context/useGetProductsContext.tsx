@@ -90,12 +90,17 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   }, [isPage]);
 
   const handleNextPageClick = useCallback(() => {
-    if (isPage === 4) {
+    if (GetAllProducts &&
+      GetAllProducts.allProducts &&
+      GetAllProducts.allProducts.length === 0 || isPage === 4) {
       setIsNextPageDisable(true)
     } else {
       setIsPage(() => isPage + 1)
+
     }
-  }, [isPage]);
+  }, [isPage, GetAllProducts]);
+
+  console.log('GetAllProducts ===>', GetAllProducts?.allProducts.length)
 
   useEffect(() => {
     if (isPage !== 1) {
