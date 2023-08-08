@@ -38,9 +38,6 @@ const TextDiv = styled.div`
 
 `
 
-const TextDescription = styled.div`
-`
-
 const ButtonAdd = styled.button`
   background-color: #115D8C;
   border: none;
@@ -80,10 +77,10 @@ const ProductDetails = () => {
                   <p style={{ fontSize: '2em', color: "color: #41414D" }}>{GetProductDetail?.Product?.name}</p>
                   <p style={{ fontWeight: "bold", color: "color: #41414D" }}>{formatMonetaryValue(GetProductDetail?.Product?.price_in_cents)}</p>
                 </div>
-                <TextDescription>
+                <div>
                   <p style={{ color: "color: #41414D" }}>Descrição</p>
                   <p style={{ color: "color: #41414D", textAlign: 'justify' }}>{GetProductDetail?.Product?.description}</p>
-                </TextDescription>
+                </div>
 
                 <ButtonAdd>
                   <Image src={Group} alt='shopping-bag-icon' />
