@@ -35,6 +35,11 @@ export interface IGetProductsProps {
 
   isPrevPageDisable: boolean;
   setIsPrevPageDisable: Dispatch<SetStateAction<boolean>>;
+
+  isProductType: string | undefined;
+  setIsProductType: Dispatch<SetStateAction<string | undefined>>;
+
+  handleProductType: (value: string | undefined) => void
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -47,12 +52,19 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isPage, setIsPage] = useState<number>(1)
   const [isNextPageDisable, setIsNextPageDisable] = useState<boolean>(false)
   const [isPrevPageDisable, setIsPrevPageDisable] = useState<boolean>(false)
+  const [isProductType, setIsProductType] = useState<string | undefined>(undefined)
 
   const {
     data: GetAllProducts,
     loading: LoadingAllProducts,
     error: ErrorAllProducts,
-  } = useGetAllProductsList({ variables: { page: isPage, perPage: 10 } });
+  } = useGetAllProductsList({
+    variables: {
+      page: isPage,
+      perPage: 10,
+      filter: { category: isProductType }
+    }
+  });
 
   const {
     data: GetProductDetail,
@@ -95,6 +107,12 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     }
   }, [isPage])
 
+  const handleProductType = useCallback((value: string | undefined) => {
+    if (value === "t-shirts" || value === "mugs" || value === undefined) {
+      setIsProductType(value)
+    }
+  }, [])
+
   const value = useMemo(
     () => ({
       GetAllProducts,
@@ -112,6 +130,9 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       setIsNextPageDisable,
       isPrevPageDisable,
       setIsPrevPageDisable,
+      isProductType,
+      setIsProductType,
+      handleProductType,
     }), [
     GetAllProducts,
     LoadingAllProducts,
@@ -128,6 +149,9 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     setIsNextPageDisable,
     isPrevPageDisable,
     setIsPrevPageDisable,
+    isProductType,
+    setIsProductType,
+    handleProductType,
   ])
 
   return (

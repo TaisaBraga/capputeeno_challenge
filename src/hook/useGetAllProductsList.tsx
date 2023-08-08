@@ -1,8 +1,8 @@
 import { gql, QueryResult, useQuery } from '@apollo/client';
 
 export const ALL_PRODUCTS = gql`
-query Query($page: Int, $perPage: Int) {
-  allProducts(page: $page, perPage: $perPage){
+query Query($page: Int, $perPage: Int, $filter: ProductFilter) {
+  allProducts(page: $page, perPage: $perPage, filter: $filter){
     id
     image_url
     name
@@ -26,7 +26,10 @@ export interface IGetAllProducts {
 export type useGetAllProducts = {
   variables: {
     page: number,
-    perPage: number
+    perPage: number,
+    filter: {
+      category?: string
+    }
   }
 }
 
