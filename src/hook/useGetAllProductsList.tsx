@@ -28,7 +28,8 @@ export type useGetAllProducts = {
     page: number,
     perPage: number,
     filter: {
-      category?: string
+      category?: string,
+      name?: string,
     }
   }
 }

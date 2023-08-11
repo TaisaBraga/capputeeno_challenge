@@ -2,9 +2,9 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import Image from 'next/image'
 import { Saira_Stencil_One } from 'next/font/google'
-import shoppingBag from '../../../public/shopping-bag.png'
+import { SearchInput } from '../molecules/SearchInput';
+import { useGetProductsContext } from '@/context/useGetProductsContext';
 
 const fontTitle = Saira_Stencil_One({
   weight: ['400'],
@@ -36,15 +36,15 @@ input {
 `
 
 export const NavegateBar = () => {
+  const { isSearchFilter, handleChange } = useGetProductsContext();
   return (
     <Header>
       <div>
         <h1 className={fontTitle.className}>capputeeno</h1>
       </div>
-      <NavegateMenu>
-        <input type="text" placeholder='Procurando por algo específico?' />
-        <Image src={shoppingBag} alt='shopping-bag-icon' style={{ marginLeft: '25px', cursor: 'pointer' }} />
-      </NavegateMenu>
+      {/* <NavegateMenu>
+        <SearchInput handleChange={(e) => handleChange(e.target.value)} value={isSearchFilter} />
+      </NavegateMenu> */}
     </Header>
   )
 }

@@ -40,6 +40,10 @@ export interface IGetProductsProps {
   setIsProductType: Dispatch<SetStateAction<string | undefined>>;
 
   handleProductType: (value: string | undefined) => void
+
+  isSearchFilter: any;
+  setIsSearchFilter: unknown;
+  handleChange: (e: any) => void
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -53,6 +57,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isNextPageDisable, setIsNextPageDisable] = useState<boolean>(false)
   const [isPrevPageDisable, setIsPrevPageDisable] = useState<boolean>(false)
   const [isProductType, setIsProductType] = useState<string | undefined>(undefined)
+  const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>('')
 
   const {
     data: GetAllProducts,
@@ -100,8 +105,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     }
   }, [isPage, GetAllProducts]);
 
-  console.log('GetAllProducts ===>', GetAllProducts?.allProducts.length)
-
   useEffect(() => {
     if (isPage !== 1) {
       setIsPrevPageDisable(false)
@@ -116,6 +119,10 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     if (value === "t-shirts" || value === "mugs" || value === undefined) {
       setIsProductType(value)
     }
+  }, [])
+
+  const handleChange = useCallback((e: any) => {
+    setIsSearchFilter(e.target.value)
   }, [])
 
   const value = useMemo(
@@ -138,6 +145,9 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isProductType,
       setIsProductType,
       handleProductType,
+      isSearchFilter,
+      setIsSearchFilter,
+      handleChange,
     }), [
     GetAllProducts,
     LoadingAllProducts,
@@ -157,6 +167,9 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     isProductType,
     setIsProductType,
     handleProductType,
+    isSearchFilter,
+    setIsSearchFilter,
+    handleChange
   ])
 
   return (

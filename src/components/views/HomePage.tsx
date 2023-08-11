@@ -1,13 +1,13 @@
 import React from 'react'
 import { ProductsList } from '../organisms/ProductsList'
 import { FilterBar } from '../organisms/FilterBar'
-import { FilterProducts } from '../molecules/FilterProducts'
+import { Pagination } from '../molecules/Pagination'
 
 export const HomePage = () => {
   return (
     <>
-      <FilterProducts />
       <FilterBar />
+      <Pagination />
       <ProductsList />
     </>
   )
