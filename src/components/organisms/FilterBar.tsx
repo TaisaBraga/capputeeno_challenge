@@ -4,9 +4,10 @@ import { FilterByOrder } from '../molecules/FilterByOrder'
 import { styled } from 'styled-components'
 
 const FilterContainer = styled.div`
+  align-items: end;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  margin: 0 5em 0 5em
 
 `
 
