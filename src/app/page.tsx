@@ -6,9 +6,6 @@ import { client } from '@/lib/apollo'
 import ProductDetails from '@/components/molecules/ProductDetails'
 import { HomePage } from '@/components/views/HomePage'
 
-
-
-
 export default function Home() {
   return (
     <ApolloProvider client={client}>

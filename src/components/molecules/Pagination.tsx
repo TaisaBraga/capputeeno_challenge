@@ -49,17 +49,22 @@ export const Pagination = () => {
     handlePreviousPage,
     handleNextPageClick,
     isPrevPageDisable,
-    isNextPageDisable
+    isNextPageDisable,
+    isFilter,
   } = useGetProductsContext();
 
   return (
-    <PaginationDiv>
-      <RightArrowDiv id='RightArrowId' onClick={handlePreviousPage} disabled={isPrevPageDisable}>
-        <Image src={RightArrow} alt='Right Arrow' />
-      </RightArrowDiv>
-      <LeftArrowDiv onClick={handleNextPageClick} disabled={isNextPageDisable}>
-        <Image src={LeftArrow} alt='Left Arrow' />
-      </LeftArrowDiv>
-    </PaginationDiv >
+    <>
+      {!isFilter ? (<PaginationDiv>
+        <RightArrowDiv id='RightArrowId' onClick={handlePreviousPage} disabled={isPrevPageDisable}>
+          <Image src={RightArrow} alt='Right Arrow' />
+        </RightArrowDiv>
+        <LeftArrowDiv onClick={handleNextPageClick} disabled={isNextPageDisable}>
+          <Image src={LeftArrow} alt='Left Arrow' />
+        </LeftArrowDiv>
+      </PaginationDiv >) : null
+      }
+    </>
+
   )
 }

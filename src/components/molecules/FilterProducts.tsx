@@ -1,7 +1,7 @@
 import { useGetProductsContext } from '@/context/useGetProductsContext'
-import React, { useState } from 'react'
+import { FilterByProducts } from '@/types/FilterTypes'
+import React from 'react'
 import { styled } from 'styled-components'
-import css from 'styled-jsx/css'
 
 
 
@@ -30,8 +30,8 @@ export const FilterProducts = () => {
   return (
     <StyledList>
       <li onClick={() => handleProductType(undefined)} className={isProductType === undefined ? 'active' : ''}>Todos os Produtos</li>
-      <li onClick={() => handleProductType("t-shirts")} className={isProductType === 't-shirts' ? 'active' : ''}>Camisetas</li>
-      <li onClick={() => handleProductType("mugs")} className={isProductType === 'mugs' ? 'active' : ''}> Canecas</li>
+      <li onClick={() => handleProductType(FilterByProducts.TSHIRTS)} className={isProductType === FilterByProducts.TSHIRTS ? 'active' : ''}>Camisetas</li>
+      <li onClick={() => handleProductType(FilterByProducts.MUGS)} className={isProductType === FilterByProducts.MUGS ? 'active' : ''}> Canecas</li>
     </StyledList>
   )
 }

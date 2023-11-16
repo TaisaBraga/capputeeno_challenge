@@ -3,6 +3,7 @@ import { NavegateBar } from '@/components/organisms/NavegateBar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Saira } from 'next/font/google'
+import { useEffect, useState } from 'react'
 
 export const saira = Saira({
   weight: ['300', '400', '500', '600'],
@@ -19,11 +20,31 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [])
+
   return (
     <html lang="en">
       <body className={saira.className}>
-        <NavegateBar />
-        {children}
+        {loading ? (
+          <div>
+            <p>CARREGANDO...</p>
+          </div>
+        ) : (
+          <>
+            <header>
+              <NavegateBar />
+            </header>
+            {children}
+          </>
+        )}
       </body>
     </html>
   )

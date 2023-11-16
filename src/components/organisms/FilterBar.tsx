@@ -2,6 +2,7 @@ import React from 'react'
 import { FilterProducts } from '../molecules/FilterProducts'
 import { FilterByOrder } from '../molecules/FilterByOrder'
 import { styled } from 'styled-components'
+import { useGetProductsContext } from '@/context/useGetProductsContext'
 
 const FilterContainer = styled.div`
   align-items: end;
@@ -12,10 +13,12 @@ const FilterContainer = styled.div`
 `
 
 export const FilterBar = () => {
+  const { isListVisible } = useGetProductsContext()
+
   return (
     <FilterContainer>
       <FilterProducts />
-      <FilterByOrder />
+      <FilterByOrder isDisabled={isListVisible} />
     </FilterContainer>
   )
 }

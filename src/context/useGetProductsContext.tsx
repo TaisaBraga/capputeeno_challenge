@@ -1,6 +1,7 @@
 "use client"
 import useGetAllProductsList, { IGetAllProducts, IGetProducts } from "@/hook/useGetAllProductsList";
 import useGetProductsDetails, { IGetProduct } from "@/hook/useGetProductsDetails";
+import { FilterPriorityTypes } from "@/types/FilterTypes";
 import { ApolloError } from "@apollo/client";
 import {
   Dispatch,
@@ -24,8 +25,8 @@ export interface IGetProductsProps {
   LoadingProductDetail: boolean;
   ErrorProductDetail: ApolloError | undefined;
 
-  isPage: number;
-  setIsPage: Dispatch<SetStateAction<number>>;
+  isPage: number | undefined;
+  setIsPage: Dispatch<SetStateAction<number | undefined>>;
 
   handlePreviousPage: () => void;
   handleNextPageClick: () => void;
@@ -43,7 +44,15 @@ export interface IGetProductsProps {
 
   isSearchFilter: any;
   setIsSearchFilter: unknown;
-  handleChange: (e: any) => void
+  handleChange: (e: any) => void;
+
+  handleGetProductsByFilter: (item: string) => void;
+  isListVisible: boolean;
+  setListVisible: Dispatch<SetStateAction<boolean>>;
+  isFilter: string;
+  setIsFilter: Dispatch<SetStateAction<string>>;
+  isSortOrder: string | undefined;
+  setIsSortOrder: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -53,11 +62,15 @@ export const useGetProductsContext = () =>
   useContext<IGetProductsProps>(UseGetProductsContext)
 
 export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
-  const [isPage, setIsPage] = useState<number>(1)
+  const [isPage, setIsPage] = useState<number | undefined>(1)
   const [isNextPageDisable, setIsNextPageDisable] = useState<boolean>(false)
   const [isPrevPageDisable, setIsPrevPageDisable] = useState<boolean>(false)
   const [isProductType, setIsProductType] = useState<string | undefined>(undefined)
   const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>('')
+  const [isOrderOpen, setIsOrderOpen] = useState<boolean>(false);
+  const [isListVisible, setListVisible] = useState<boolean>(false)
+  const [isFilter, setIsFilter] = useState<string>('')
+  const [isSortOrder, setIsSortOrder] = useState<string>()
 
   const {
     data: GetAllProducts,
@@ -67,7 +80,9 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     variables: {
       page: isPage,
       perPage: 10,
-      filter: { category: isProductType }
+      filter: { category: isProductType },
+      sortOrder: isSortOrder,
+      sortField: isFilter
     }
   });
 
@@ -90,7 +105,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     if (isPage === 1) {
       setIsPrevPageDisable(true)
     } else {
-      setIsPage(prev => prev - 1)
+      setIsPage(prev => prev ? prev - 1 : undefined)
     }
   }, [isPage]);
 
@@ -100,7 +115,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       GetAllProducts.allProducts.length === 0 || isPage === 4) {
       setIsNextPageDisable(true)
     } else {
-      setIsPage(() => isPage + 1)
+      setIsPage(() => isPage ? isPage + 1 : undefined)
 
     }
   }, [isPage, GetAllProducts]);
@@ -125,6 +140,38 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     setIsSearchFilter(e.target.value)
   }, [])
 
+  const handleGetProductsByFilter = useCallback(async (item: string) => {
+    const originalProducts = GetAllProducts?.allProducts;
+    // let GetAllProductsFiltered
+    if (originalProducts) {
+      if (item === FilterPriorityTypes.POPULARITY) {
+        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => b.sales - a.sales);
+        setIsPage(undefined)
+        setIsFilter(item)
+        setIsSortOrder(item)
+
+      } else if (item === FilterPriorityTypes.NEWS) {
+        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        setIsPage(undefined)
+        setIsFilter(item)
+        setIsSortOrder(item)
+      } else if (item === FilterPriorityTypes.PRICE) {
+        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => b.price_in_cents - a.price_in_cents);
+        setIsPage(undefined)
+        setIsFilter(item)
+        setIsSortOrder(item)
+      } else if (item === FilterPriorityTypes.PRICE_DESC) {
+        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => a.price_in_cents - b.price_in_cents);
+        setIsPage(undefined)
+        setIsFilter("price_in_cents")
+        setIsSortOrder(undefined)
+      }
+      // setIsFilter(item)
+      setListVisible(false);
+    }
+
+  }, [GetAllProducts])
+
   const value = useMemo(
     () => ({
       GetAllProducts,
@@ -148,29 +195,36 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isSearchFilter,
       setIsSearchFilter,
       handleChange,
-    }), [
-    GetAllProducts,
-    LoadingAllProducts,
-    ErrorAllProducts,
-    formatMonetaryValue,
-    GetProductDetail,
-    LoadingProductDetail,
+      handleGetProductsByFilter,
+      isOrderOpen,
+      setIsOrderOpen,
+      isListVisible,
+      setListVisible,
+      isFilter,
+      setIsFilter,
+      isSortOrder,
+      setIsSortOrder
+    }), [ErrorAllProducts,
     ErrorProductDetail,
-    isPage,
-    setIsPage,
-    handlePreviousPage,
+    GetAllProducts,
+    GetProductDetail,
+    LoadingAllProducts,
+    LoadingProductDetail,
+    formatMonetaryValue,
+    handleChange,
+    handleGetProductsByFilter,
     handleNextPageClick,
-    isNextPageDisable,
-    setIsNextPageDisable,
-    isPrevPageDisable,
-    setIsPrevPageDisable,
-    isProductType,
-    setIsProductType,
+    handlePreviousPage,
     handleProductType,
+    isFilter,
+    isListVisible,
+    isNextPageDisable,
+    isOrderOpen,
+    isPage,
+    isPrevPageDisable,
+    isProductType,
     isSearchFilter,
-    setIsSearchFilter,
-    handleChange
-  ])
+    isSortOrder])
 
   return (
     <UseGetProductsContext.Provider value={value}>

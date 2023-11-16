@@ -1,3 +1,5 @@
+import { useGetProductsContext } from '@/context/useGetProductsContext'
+import { FilterPriorityTypes } from '@/types/FilterTypes'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -24,12 +26,14 @@ const List = styled.ul`
 `
 
 export const ListItem = () => {
+  const { handleGetProductsByFilter } = useGetProductsContext()
+
   return (
-    <List >
-      <li>Novidades</li>
-      <li>Preço: Maior - menor</li>
-      <li>Preço: Menor - maior</li>
-      <li>Mais Vendidos</li>
+    <List>
+      <li onClick={() => handleGetProductsByFilter(FilterPriorityTypes.NEWS)}>Novidades</li>
+      <li onClick={() => handleGetProductsByFilter(FilterPriorityTypes.PRICE)}>Preço: Maior - menor</li>
+      <li onClick={() => handleGetProductsByFilter(FilterPriorityTypes.PRICE_DESC)}>Preço: Menor - maior</li>
+      <li onClick={() => handleGetProductsByFilter(FilterPriorityTypes.POPULARITY)}>Mais Vendidos</li>
     </List>
   )
 }
