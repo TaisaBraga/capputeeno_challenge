@@ -23,7 +23,7 @@ const Filters = styled.div<{ isDisabled: boolean }>`
 `;
 
 export const FilterByOrder: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) => {
-  const { isListVisible, setListVisible, isFilter } = useGetProductsContext()
+  const { isListVisible, setListVisible, isFilter, } = useGetProductsContext()
 
   const handleOpenDrawer = () => {
     setListVisible(!isListVisible)
@@ -32,26 +32,26 @@ export const FilterByOrder: React.FC<{ isDisabled: boolean }> = ({ isDisabled })
   return (
     <FilterContainer>
       {isFilter === FilterPriorityTypes.NEWS ?
-        <FilterTitle onClick={handleOpenDrawer}>
+        <FilterTitle>
           Novidades
-          <Image src={DownArrow} alt='DownArrow' />
+          <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
         </FilterTitle>
         : isFilter === FilterPriorityTypes.POPULARITY ?
-          <FilterTitle onClick={handleOpenDrawer}>
+          <FilterTitle >
             Mais Vendidos
-            <Image src={DownArrow} alt='DownArrow' />
+            <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
           </FilterTitle>
           : isFilter === FilterPriorityTypes.PRICE ?
-            <FilterTitle onClick={handleOpenDrawer}>
+            <FilterTitle>
               Maior Preço
-              <Image src={DownArrow} alt='DownArrow' />
+              <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
             </FilterTitle>
             : isFilter === FilterPriorityTypes.PRICE_DESC ?
-              <FilterTitle onClick={handleOpenDrawer}>
+              <FilterTitle >
                 Menor Preço
-                <Image src={DownArrow} alt='DownArrow' />
+                <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
               </FilterTitle> :
-              <FilterTitle onClick={handleOpenDrawer}>
+              <FilterTitle onClick={handleOpenDrawer} >
                 Organizar por
                 <Image src={DownArrow} alt='DownArrow' />
               </FilterTitle>
