@@ -8,17 +8,16 @@ const FilterContainer = styled.div`
   align-items: end;
   display: flex;
   justify-content: space-between;
-  margin: 0 5em 0 5em
-
+  margin: 0 5em 0 5em;
 `
 
 export const FilterBar = () => {
-  const { isListVisible } = useGetProductsContext()
+  /* const { isListVisible } = useGetProductsContext() */
 
   return (
     <FilterContainer>
       <FilterProducts />
-      <FilterByOrder isDisabled={isListVisible} />
+      {/* <FilterByOrder /> */}
     </FilterContainer>
   )
 }

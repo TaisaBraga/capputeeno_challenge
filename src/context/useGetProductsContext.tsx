@@ -42,10 +42,6 @@ export interface IGetProductsProps {
 
   handleProductType: (value: string | undefined) => void
 
-  isSearchFilter: any;
-  setIsSearchFilter: unknown;
-  handleChange: (e: any) => void;
-
   handleGetProductsByFilter: (item: string) => void;
   isListVisible: boolean;
   setListVisible: Dispatch<SetStateAction<boolean>>;
@@ -54,6 +50,10 @@ export interface IGetProductsProps {
 
   isSortOrder: string | undefined;
   setIsSortOrder: Dispatch<SetStateAction<string | undefined>>;
+
+  isSearchFilter: string | undefined;
+  setIsSearchFilter: Dispatch<SetStateAction<string | undefined>>;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -67,11 +67,11 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isNextPageDisable, setIsNextPageDisable] = useState<boolean>(false)
   const [isPrevPageDisable, setIsPrevPageDisable] = useState<boolean>(false)
   const [isProductType, setIsProductType] = useState<string | undefined>(undefined)
-  const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>('')
   const [isOrderOpen, setIsOrderOpen] = useState<boolean>(false);
   const [isListVisible, setListVisible] = useState<boolean>(false)
   const [isFilter, setIsFilter] = useState<string>()
   const [isSortOrder, setIsSortOrder] = useState<string>()
+  const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>(undefined)
 
   const {
     data: GetAllProducts,
@@ -81,7 +81,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     variables: {
       page: isPage,
       perPage: 10,
-      filter: { category: isProductType },
+      filter: { category: isProductType, name: isSearchFilter },
       sortOrder: isSortOrder,
       sortField: isFilter
     }
@@ -141,10 +141,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     }
   }, [])
 
-  const handleChange = useCallback((e: any) => {
-    setIsSearchFilter(e.target.value)
-  }, [])
-
   const handleGetProductsByFilter = useCallback(async (item: string) => {
     const originalProducts = GetAllProducts?.allProducts;
     // let GetAllProductsFiltered
@@ -177,6 +173,11 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
 
   }, [GetAllProducts]);
 
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSearchFilter(e.target.value)
+  }, [])
+
+
   const value = useMemo(
     () => ({
       GetAllProducts,
@@ -197,9 +198,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isProductType,
       setIsProductType,
       handleProductType,
-      isSearchFilter,
-      setIsSearchFilter,
-      handleChange,
       handleGetProductsByFilter,
       isOrderOpen,
       setIsOrderOpen,
@@ -209,6 +207,9 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       setIsFilter,
       isSortOrder,
       setIsSortOrder,
+      isSearchFilter,
+      setIsSearchFilter,
+      handleChange,
     }), [ErrorAllProducts,
     ErrorProductDetail,
     GetAllProducts,
@@ -216,7 +217,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     LoadingAllProducts,
     LoadingProductDetail,
     formatMonetaryValue,
-    handleChange,
     handleGetProductsByFilter,
     handleNextPageClick,
     handlePreviousPage,
@@ -228,8 +228,10 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     isPage,
     isPrevPageDisable,
     isProductType,
-    isSearchFilter,
     isSortOrder,
+    isSearchFilter,
+    setIsSearchFilter,
+    handleChange
   ])
 
   return (

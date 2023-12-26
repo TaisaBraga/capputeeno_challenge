@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import DownArrow from '../../../public/DownArrow.png'
 import { styled, css } from 'styled-components'
 import { ListItem } from '../atoms/ListItem'
@@ -18,12 +18,16 @@ const FilterTitle = styled.div`
   }
   
 `
-const Filters = styled.div<{ isDisabled: boolean }>`
-  ${({ isDisabled }) => (isDisabled ? css`display: block-flow` : css`display: none`)};
-`;
 
-export const FilterByOrder: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) => {
+// const Filters = styled.div`
+// ${({ disabled }) =>
+//     disabled
+//       ? ` display: block-flow` : ` display: none`}
+// `;
+
+export const FilterByOrder: React.FC = () => {
   const { isListVisible, setListVisible, isFilter, } = useGetProductsContext()
+  const [isFilterDisabled, setIsFilterDisabled] = useState<boolean>(false);
 
   const handleOpenDrawer = () => {
     setListVisible(!isListVisible)
@@ -57,9 +61,9 @@ export const FilterByOrder: React.FC<{ isDisabled: boolean }> = ({ isDisabled })
               </FilterTitle>
       }
 
-      <Filters isDisabled={isDisabled}>
+      <div>
         <ListItem />
-      </Filters>
+      </div>
     </FilterContainer>
   )
 }

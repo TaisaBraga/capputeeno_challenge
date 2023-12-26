@@ -2,20 +2,29 @@ import React from 'react'
 import Image from 'next/image'
 import shoppingBag from '../../../public/shopping-bag.png'
 import searchLoupe from '../../../public/searchLoupe.png'
-import { useGetProductsContext } from '@/context/useGetProductsContext'
+import styled from 'styled-components'
 
 interface inputProps {
-  value: string,
-  onchange: () => {}
+  inputValue?: string,
+  inputChange: any
 }
 
-export const SearchInput = (props: inputProps) => {
+const SearchBar = styled.div`
+  align-items: center;
+  display: flex;
+  input {
+ background-color: #F3F5F6;
+ box-shadow: none;
+}
+`
+
+export const SearchInput = ({ inputChange, inputValue }: inputProps) => {
   return (
-    <>
-      {/* <input type="text"
+    <SearchBar>
+      <input type="text"
         placeholder='Procurando por algo específico?'
-        onChange={onchange}
-        {...props}
+        onChange={inputChange}
+        value={inputValue}
       />
       <Image src={searchLoupe}
         alt='search-loupe-icon'
@@ -24,7 +33,7 @@ export const SearchInput = (props: inputProps) => {
       <Image src={shoppingBag}
         alt='shopping-bag-icon'
         style={{ marginLeft: '25px', cursor: 'pointer' }}
-      /> */}
-    </>
+      />
+    </SearchBar>
   )
 }

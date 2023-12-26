@@ -31,20 +31,20 @@ input {
   padding: 10px;
   outline: 0;
   width: 352px;
- 
 }
 `
 
 export const NavegateBar = () => {
   const { isSearchFilter, handleChange } = useGetProductsContext();
+
   return (
     <Header>
       <div>
         <h1 className={fontTitle.className}>capputeeno</h1>
       </div>
-      {/* <NavegateMenu>
-        <SearchInput handleChange={(e) => handleChange(e.target.value)} value={isSearchFilter} />
-      </NavegateMenu> */}
+      <NavegateMenu>
+        <SearchInput inputChange={handleChange} inputValue={isSearchFilter} />
+      </NavegateMenu>
     </Header>
   )
 }

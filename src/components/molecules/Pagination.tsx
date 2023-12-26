@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import RightArrow from '../../../public/RightArrow.png'
 import LeftArrow from '../../../public/LeftArrow.png'
-import { css, styled } from 'styled-components'
+import { styled } from 'styled-components'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
 
 const PaginationDiv = styled.div`
@@ -22,9 +22,9 @@ const RightArrowDiv = styled.button`
   height: 2em;
   margin: 0.3em;
   width: 2em;
-  ${({ disabled }) =>
-    disabled
-      ? css` border: none` : css` border: 0.8px solid #CFCFCF`}
+  ${({ disabled }) => disabled ? `
+    border: none
+  ` : `border: 0.8px solid #CFCFCF`}
   
 `
 
@@ -41,7 +41,7 @@ const LeftArrowDiv = styled.button`
   width: 2em;
   ${({ disabled }) =>
     disabled
-      ? css` border: none` : css` border: 0.8px solid #CFCFCF`}
+      ? ` border: none` : ` border: 0.8px solid #CFCFCF`}
 `
 
 export const Pagination = () => {
@@ -55,14 +55,17 @@ export const Pagination = () => {
 
   return (
     <>
-      {!isFilter ? (<PaginationDiv>
-        <RightArrowDiv id='RightArrowId' onClick={handlePreviousPage} disabled={isPrevPageDisable}>
-          <Image src={RightArrow} alt='Right Arrow' />
-        </RightArrowDiv>
-        <LeftArrowDiv onClick={handleNextPageClick} disabled={isNextPageDisable}>
-          <Image src={LeftArrow} alt='Left Arrow' />
-        </LeftArrowDiv>
-      </PaginationDiv >) : null
+      {!isFilter ?
+        (
+          <PaginationDiv>
+            <RightArrowDiv id='RightArrowId' onClick={handlePreviousPage} disabled={isPrevPageDisable}>
+              <Image src={RightArrow} alt='Right Arrow' />
+            </RightArrowDiv>
+            <LeftArrowDiv onClick={handleNextPageClick} disabled={isNextPageDisable}>
+              <Image src={LeftArrow} alt='Left Arrow' />
+            </LeftArrowDiv>
+          </PaginationDiv>
+        ) : null
       }
     </>
 

@@ -42,7 +42,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={saira.className}>
+      <body className={saira.className} suppressHydrationWarning={true}>
         {loading ? (
           <Loader>
             <BeatLoader color="#3C4148" />
