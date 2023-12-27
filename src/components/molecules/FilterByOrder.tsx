@@ -1,33 +1,29 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React from 'react'
 import DownArrow from '../../../public/DownArrow.png'
-import { styled, css } from 'styled-components'
+import { styled } from 'styled-components'
 import { ListItem } from '../atoms/ListItem'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
-import { FilterPriorityTypes } from '@/types/FilterTypes'
 
 const FilterContainer = styled.div`
   height: 50px;
   position: relative;
 `
 const FilterTitle = styled.div`
-  color: #5D5D6D;
+  color: #5f5f6b;
   cursor: pointer;
   & img {
     margin-left: 0.5em;
   }
-  
 `
 
-// const Filters = styled.div`
-// ${({ disabled }) =>
-//     disabled
-//       ? ` display: block-flow` : ` display: none`}
-// `;
+const ContainerFilter = styled.div`
+  display: 'block-flow';
+`;
 
-export const FilterByOrder: React.FC = () => {
-  const { isListVisible, setListVisible, isFilter, } = useGetProductsContext()
-  const [isFilterDisabled, setIsFilterDisabled] = useState<boolean>(false);
+
+export const FilterByOrder = () => {
+  const { isListVisible, setListVisible, isSortOrderProducts } = useGetProductsContext()
 
   const handleOpenDrawer = () => {
     setListVisible(!isListVisible)
@@ -35,35 +31,18 @@ export const FilterByOrder: React.FC = () => {
 
   return (
     <FilterContainer>
-      {isFilter === FilterPriorityTypes.NEWS ?
-        <FilterTitle>
-          Novidades
-          <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
-        </FilterTitle>
-        : isFilter === FilterPriorityTypes.POPULARITY ?
-          <FilterTitle >
-            Mais Vendidos
-            <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
-          </FilterTitle>
-          : isFilter === FilterPriorityTypes.PRICE ?
-            <FilterTitle>
-              Maior Preço
-              <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
-            </FilterTitle>
-            : isFilter === FilterPriorityTypes.PRICE_DESC ?
-              <FilterTitle >
-                Menor Preço
-                <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
-              </FilterTitle> :
-              <FilterTitle onClick={handleOpenDrawer} >
-                Organizar por
-                <Image src={DownArrow} alt='DownArrow' />
-              </FilterTitle>
+      <FilterTitle >
+        Organizar por
+        <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
+      </FilterTitle>
+      {isListVisible ?
+        (
+          <ContainerFilter>
+            <ListItem />
+          </ContainerFilter>
+        )
+        : null
       }
-
-      <div>
-        <ListItem />
-      </div>
     </FilterContainer>
   )
 }

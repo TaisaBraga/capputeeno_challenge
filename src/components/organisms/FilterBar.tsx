@@ -9,15 +9,15 @@ const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 5em 0 5em;
+
 `
 
 export const FilterBar = () => {
-  /* const { isListVisible } = useGetProductsContext() */
 
   return (
     <FilterContainer>
       <FilterProducts />
-      {/* <FilterByOrder /> */}
+      <FilterByOrder />
     </FilterContainer>
   )
 }

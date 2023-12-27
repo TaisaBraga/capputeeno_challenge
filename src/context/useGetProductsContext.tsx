@@ -40,7 +40,7 @@ export interface IGetProductsProps {
   isProductType: string | undefined;
   setIsProductType: Dispatch<SetStateAction<string | undefined>>;
 
-  handleProductType: (value: string | undefined) => void
+  handleProductType: (value: string | undefined) => void;
 
   handleGetProductsByFilter: (item: string) => void;
   isListVisible: boolean;
@@ -53,7 +53,10 @@ export interface IGetProductsProps {
 
   isSearchFilter: string | undefined;
   setIsSearchFilter: Dispatch<SetStateAction<string | undefined>>;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
+  isSortOrderProducts: boolean;
+  setIsSortOrderProducts: Dispatch<SetStateAction<boolean>>;
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -69,9 +72,10 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isProductType, setIsProductType] = useState<string | undefined>(undefined)
   const [isOrderOpen, setIsOrderOpen] = useState<boolean>(false);
   const [isListVisible, setListVisible] = useState<boolean>(false)
-  const [isFilter, setIsFilter] = useState<string>()
-  const [isSortOrder, setIsSortOrder] = useState<string>()
+  const [isFilter, setIsFilter] = useState<string | undefined>(undefined)
+  const [isSortOrder, setIsSortOrder] = useState<string | undefined>(undefined)
   const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>(undefined)
+  const [isSortOrderProducts, setIsSortOrderProducts] = useState<boolean>(false)
 
   const {
     data: GetAllProducts,
@@ -144,6 +148,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const handleGetProductsByFilter = useCallback(async (item: string) => {
     const originalProducts = GetAllProducts?.allProducts;
     // let GetAllProductsFiltered
+
     if (originalProducts) {
       if (item === FilterPriorityTypes.POPULARITY) {
         // GetAllProductsFiltered = [...originalProducts].sort((a, b) => b.sales - a.sales);
@@ -164,10 +169,10 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       } else if (item === FilterPriorityTypes.PRICE_DESC) {
         // GetAllProductsFiltered = [...originalProducts].sort((a, b) => a.price_in_cents - b.price_in_cents);
         setIsPage(undefined)
-        setIsFilter("price_in_cents")
-        setIsSortOrder(undefined)
+        setIsFilter(item)
+        setIsSortOrder(item)
       }
-      // setIsFilter(item)
+      setIsSortOrderProducts(true)
       setListVisible(false);
     }
 
@@ -210,29 +215,34 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isSearchFilter,
       setIsSearchFilter,
       handleChange,
-    }), [ErrorAllProducts,
-    ErrorProductDetail,
-    GetAllProducts,
-    GetProductDetail,
-    LoadingAllProducts,
-    LoadingProductDetail,
-    formatMonetaryValue,
-    handleGetProductsByFilter,
-    handleNextPageClick,
-    handlePreviousPage,
-    handleProductType,
-    isFilter,
-    isListVisible,
-    isNextPageDisable,
-    isOrderOpen,
-    isPage,
-    isPrevPageDisable,
-    isProductType,
-    isSortOrder,
-    isSearchFilter,
-    setIsSearchFilter,
-    handleChange
-  ])
+      isSortOrderProducts,
+      setIsSortOrderProducts,
+    }),
+    [
+      ErrorAllProducts,
+      ErrorProductDetail,
+      GetAllProducts,
+      GetProductDetail,
+      LoadingAllProducts,
+      LoadingProductDetail,
+      formatMonetaryValue,
+      handleGetProductsByFilter,
+      handleNextPageClick,
+      handlePreviousPage,
+      handleProductType,
+      isFilter,
+      isListVisible,
+      isNextPageDisable,
+      isOrderOpen,
+      isPage,
+      isPrevPageDisable,
+      isProductType,
+      isSortOrder,
+      isSearchFilter,
+      setIsSearchFilter,
+      handleChange,
+      isSortOrderProducts
+    ])
 
   return (
     <UseGetProductsContext.Provider value={value}>

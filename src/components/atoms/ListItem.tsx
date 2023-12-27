@@ -19,7 +19,7 @@ const List = styled.ul`
     padding: 0.6em;
 
     &:hover {
-      background-color: #D3D3D3;
+      background-color: #eae7e7;
       border-radius: 1em;
     }
   }
