@@ -21,15 +21,28 @@ const CardContentDiv = styled.div`
 
 
 export const ProductsList = () => {
-  const { GetAllProducts, formatMonetaryValue } = useGetProductsContext()
+  const { GetAllProducts, formatMonetaryValue, isReversedList } = useGetProductsContext()
 
   return (
-    <CardDiv>
-      {GetAllProducts?.allProducts?.map((item, index) => (
-        <CardContentDiv key={index}>
-          <CardContent imageUrl={item?.image_url} name={item?.name} price={formatMonetaryValue(item?.price_in_cents)} />
-        </CardContentDiv>
-      ))}
-    </CardDiv>
+    <>
+      {isReversedList ? (
+        <CardDiv>
+          {GetAllProducts?.allProducts?.map((item, index) => (
+            <CardContentDiv key={index}>
+              <CardContent imageUrl={item?.image_url} name={item?.name} price={formatMonetaryValue(item?.price_in_cents)} />
+            </CardContentDiv>
+          )).reverse()}
+        </CardDiv>
+      ) : (
+        <CardDiv>
+          {GetAllProducts?.allProducts?.map((item, index) => (
+            <CardContentDiv key={index}>
+              <CardContent imageUrl={item?.image_url} name={item?.name} price={formatMonetaryValue(item?.price_in_cents)} />
+            </CardContentDiv>
+          ))}
+        </CardDiv>
+      )}
+    </>
+
   )
 }

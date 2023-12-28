@@ -29,9 +29,18 @@ export const FilterProducts = () => {
 
   return (
     <StyledList>
-      <li onClick={() => handleProductType(undefined)} className={isProductType === undefined ? 'active' : ''}>Todos os Produtos</li>
-      <li onClick={() => handleProductType(FilterByProducts.TSHIRTS)} className={isProductType === FilterByProducts.TSHIRTS ? 'active' : ''}>Camisetas</li>
-      <li onClick={() => handleProductType(FilterByProducts.MUGS)} className={isProductType === FilterByProducts.MUGS ? 'active' : ''}> Canecas</li>
+      <li
+        onClick={() => handleProductType(undefined)}
+        className={isProductType === undefined ? 'active' : ''}
+      > Todos os Produtos </li>
+      <li
+        onClick={() => handleProductType(FilterByProducts.TSHIRTS)}
+        className={isProductType === FilterByProducts.TSHIRTS ? 'active' : ''}
+      >Camisetas</li>
+      <li
+        onClick={() => handleProductType(FilterByProducts.MUGS)}
+        className={isProductType === FilterByProducts.MUGS ? 'active' : ''}
+      > Canecas</li>
     </StyledList>
   )
 }

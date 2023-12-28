@@ -23,7 +23,7 @@ const ContainerFilter = styled.div`
 
 
 export const FilterByOrder = () => {
-  const { isListVisible, setListVisible, isSortOrderProducts } = useGetProductsContext()
+  const { isListVisible, setListVisible } = useGetProductsContext()
 
   const handleOpenDrawer = () => {
     setListVisible(!isListVisible)
@@ -31,9 +31,9 @@ export const FilterByOrder = () => {
 
   return (
     <FilterContainer>
-      <FilterTitle >
+      <FilterTitle onClick={handleOpenDrawer}>
         Organizar por
-        <Image src={DownArrow} alt='DownArrow' onClick={handleOpenDrawer} />
+        <Image src={DownArrow} alt='DownArrow' />
       </FilterTitle>
       {isListVisible ?
         (

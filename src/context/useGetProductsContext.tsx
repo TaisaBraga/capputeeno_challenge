@@ -55,8 +55,8 @@ export interface IGetProductsProps {
   setIsSearchFilter: Dispatch<SetStateAction<string | undefined>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
-  isSortOrderProducts: boolean;
-  setIsSortOrderProducts: Dispatch<SetStateAction<boolean>>;
+  isReversedList: boolean;
+  setIsReversedList: Dispatch<SetStateAction<boolean>>
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -75,7 +75,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isFilter, setIsFilter] = useState<string | undefined>(undefined)
   const [isSortOrder, setIsSortOrder] = useState<string | undefined>(undefined)
   const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>(undefined)
-  const [isSortOrderProducts, setIsSortOrderProducts] = useState<boolean>(false)
+  const [isReversedList, setIsReversedList] = useState<boolean>(false);
 
   const {
     data: GetAllProducts,
@@ -147,32 +147,27 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
 
   const handleGetProductsByFilter = useCallback(async (item: string) => {
     const originalProducts = GetAllProducts?.allProducts;
-    // let GetAllProductsFiltered
 
     if (originalProducts) {
       if (item === FilterPriorityTypes.POPULARITY) {
-        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => b.sales - a.sales);
         setIsPage(undefined)
         setIsFilter(item)
         setIsSortOrder(item)
 
       } else if (item === FilterPriorityTypes.NEWS) {
-        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         setIsPage(undefined)
         setIsFilter(item)
         setIsSortOrder(item)
       } else if (item === FilterPriorityTypes.PRICE) {
-        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => b.price_in_cents - a.price_in_cents);
         setIsPage(undefined)
         setIsFilter(item)
         setIsSortOrder(item)
       } else if (item === FilterPriorityTypes.PRICE_DESC) {
-        // GetAllProductsFiltered = [...originalProducts].sort((a, b) => a.price_in_cents - b.price_in_cents);
         setIsPage(undefined)
         setIsFilter(item)
         setIsSortOrder(item)
+        setIsReversedList(true);
       }
-      setIsSortOrderProducts(true)
       setListVisible(false);
     }
 
@@ -215,8 +210,8 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isSearchFilter,
       setIsSearchFilter,
       handleChange,
-      isSortOrderProducts,
-      setIsSortOrderProducts,
+      isReversedList,
+      setIsReversedList
     }),
     [
       ErrorAllProducts,
@@ -241,7 +236,8 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isSearchFilter,
       setIsSearchFilter,
       handleChange,
-      isSortOrderProducts
+      isReversedList,
+      setIsReversedList,
     ])
 
   return (
