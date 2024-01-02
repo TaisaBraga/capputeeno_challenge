@@ -55,6 +55,9 @@ export interface IGetProductsProps {
   isReversedList: boolean;
   setIsReversedList: Dispatch<SetStateAction<boolean>>;
 
+  isProductId: string;
+  setIsProductId: Dispatch<SetStateAction<string>>;
+
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -73,6 +76,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isFilter, setIsFilter] = useState<string | undefined>(undefined)
   const [isSortOrder, setIsSortOrder] = useState<string | undefined>(undefined)
   const [isReversedList, setIsReversedList] = useState<boolean>(false);
+  const [isProductId, setIsProductId] = useState<string>('')
 
   const {
     data: GetAllProducts,
@@ -92,10 +96,10 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     data: GetProductDetail,
     loading: LoadingProductDetail,
     error: ErrorProductDetail
-  } = useGetProductsDetails({ variables: { productId: "bd1f860e-fd26-4536-90c3-419d94d4ac94" } })
+  } = useGetProductsDetails({ variables: { productId: isProductId } })
 
   const formatMonetaryValue = useCallback((number: number | string) => {
-    const valueFormatted = number.toLocaleString('pt-BR', {
+    const valueFormatted = number?.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     });
@@ -200,31 +204,32 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isSortOrder,
       setIsSortOrder,
       isReversedList,
-      setIsReversedList
+      setIsReversedList,
+      isProductId,
+      setIsProductId
     }),
     [
-      ErrorAllProducts,
-      ErrorProductDetail,
       GetAllProducts,
-      GetProductDetail,
       LoadingAllProducts,
-      LoadingProductDetail,
+      ErrorAllProducts,
       formatMonetaryValue,
-      handleGetProductsByFilter,
-      handleNextPageClick,
-      handlePreviousPage,
-      handleProductType,
-      isFilter,
-      isListVisible,
-      isNextPageDisable,
-      isOrderOpen,
+      GetProductDetail,
+      LoadingProductDetail,
+      ErrorProductDetail,
       isPage,
+      handlePreviousPage,
+      handleNextPageClick,
+      isNextPageDisable,
       isPrevPageDisable,
       isProductType,
+      handleProductType,
+      handleGetProductsByFilter,
+      isOrderOpen,
+      isListVisible,
+      isFilter,
       isSortOrder,
       isReversedList,
-      setIsReversedList,
-    ])
+      isProductId])
 
   return (
     <UseGetProductsContext.Provider value={value}>

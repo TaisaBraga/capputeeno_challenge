@@ -1,5 +1,5 @@
 import { useGetProductsContext } from '@/context/useGetProductsContext'
-import React, { useDeferredValue } from 'react'
+import React from 'react'
 import { CardContent } from '../molecules/CardContent'
 import styled from 'styled-components'
 
@@ -23,14 +23,18 @@ const CardContentDiv = styled.div`
 export const ProductsList = () => {
   const { GetAllProducts, formatMonetaryValue, isReversedList } = useGetProductsContext()
 
-
   return (
     <>
       {isReversedList ? (
         <CardDiv>
           {GetAllProducts?.allProducts?.map((item, index) => (
             <CardContentDiv key={index}>
-              <CardContent imageUrl={item?.image_url} name={item?.name} price={formatMonetaryValue(item?.price_in_cents)} />
+              <CardContent
+                id={item?.id}
+                imageUrl={item?.image_url}
+                name={item?.name}
+                price={formatMonetaryValue(item?.price_in_cents)}
+              />
             </CardContentDiv>
           )).reverse()}
         </CardDiv>
@@ -38,7 +42,12 @@ export const ProductsList = () => {
         <CardDiv>
           {GetAllProducts?.allProducts?.map((item, index) => (
             <CardContentDiv key={index}>
-              <CardContent imageUrl={item?.image_url} name={item?.name} price={formatMonetaryValue(item?.price_in_cents)} />
+              <CardContent
+                id={item?.id}
+                imageUrl={item?.image_url}
+                name={item?.name}
+                price={formatMonetaryValue(item?.price_in_cents)}
+              />
             </CardContentDiv>
           ))}
         </CardDiv>

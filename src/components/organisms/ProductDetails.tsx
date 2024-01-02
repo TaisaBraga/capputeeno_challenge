@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
 import Group from '../../../public/Group.png'
+import Link from 'next/link'
 
 
 const DetailsPage = styled.div`
@@ -56,15 +57,15 @@ const ProductDetails = () => {
   const { GetProductDetail, formatMonetaryValue } = useGetProductsContext()
   return (
     <div>
-      <span>Voltar</span>
+      <Link href="/">Voltar</Link>
       <DetailsPage>
         {GetProductDetail ? (
           <>
             <DetailsCard>
               <ImageDiv>
                 <Image
-                  src={GetProductDetail?.Product.image_url}
-                  alt={GetProductDetail?.Product.name}
+                  src={GetProductDetail?.Product?.image_url}
+                  alt={GetProductDetail?.Product?.name}
                   layout='responsive'
                   width={0}
                   height={0}

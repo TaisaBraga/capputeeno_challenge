@@ -14,7 +14,7 @@ query Query($page: Int, $perPage: Int, $filter: ProductFilter, $sortField: Strin
 `
 
 export interface IGetProducts {
-  id: number,
+  id: string,
   image_url: string,
   name: string,
   price_in_cents: number,
