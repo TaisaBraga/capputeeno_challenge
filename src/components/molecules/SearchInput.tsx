@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 interface inputProps {
   inputValue?: string,
-  inputChange: any
+  inputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchBar = styled.div`
@@ -19,6 +19,7 @@ const SearchBar = styled.div`
 `
 
 export const SearchInput = ({ inputChange, inputValue }: inputProps) => {
+
   return (
     <SearchBar>
       <input type="text"

@@ -1,14 +1,15 @@
 "use client"
-import useGetAllProductsList, { IGetAllProducts, IGetProducts } from "@/hook/useGetAllProductsList";
+import useGetAllProductsList, { IGetAllProducts } from "@/hook/useGetAllProductsList";
 import useGetProductsDetails, { IGetProduct } from "@/hook/useGetProductsDetails";
 import { FilterByProducts, FilterPriorityTypes } from "@/types/FilterTypes";
-import { ApolloError, ApolloQueryResult, OperationVariables } from "@apollo/client";
+import { ApolloError } from "@apollo/client";
 import {
   Dispatch,
   SetStateAction,
   createContext,
   useCallback,
   useContext,
+  useDeferredValue,
   useEffect,
   useMemo,
   useState
@@ -51,12 +52,9 @@ export interface IGetProductsProps {
   isSortOrder: string | undefined;
   setIsSortOrder: Dispatch<SetStateAction<string | undefined>>;
 
-  isSearchFilter: string | undefined;
-  setIsSearchFilter: Dispatch<SetStateAction<string | undefined>>;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-
   isReversedList: boolean;
-  setIsReversedList: Dispatch<SetStateAction<boolean>>
+  setIsReversedList: Dispatch<SetStateAction<boolean>>;
+
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -74,7 +72,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isListVisible, setListVisible] = useState<boolean>(false)
   const [isFilter, setIsFilter] = useState<string | undefined>(undefined)
   const [isSortOrder, setIsSortOrder] = useState<string | undefined>(undefined)
-  const [isSearchFilter, setIsSearchFilter] = useState<string | undefined>(undefined)
   const [isReversedList, setIsReversedList] = useState<boolean>(false);
 
   const {
@@ -85,7 +82,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
     variables: {
       page: isPage,
       perPage: 10,
-      filter: { category: isProductType, name: isSearchFilter },
+      filter: { category: isProductType },
       sortOrder: isSortOrder,
       sortField: isFilter
     }
@@ -173,11 +170,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
 
   }, [GetAllProducts]);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsSearchFilter(e.target.value)
-  }, [])
-
-
   const value = useMemo(
     () => ({
       GetAllProducts,
@@ -207,9 +199,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       setIsFilter,
       isSortOrder,
       setIsSortOrder,
-      isSearchFilter,
-      setIsSearchFilter,
-      handleChange,
       isReversedList,
       setIsReversedList
     }),
@@ -233,9 +222,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isPrevPageDisable,
       isProductType,
       isSortOrder,
-      isSearchFilter,
-      setIsSearchFilter,
-      handleChange,
       isReversedList,
       setIsReversedList,
     ])

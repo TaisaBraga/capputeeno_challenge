@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Saira_Stencil_One } from 'next/font/google'
 import { SearchInput } from '../molecules/SearchInput';
@@ -35,7 +35,15 @@ input {
 `
 
 export const NavegateBar = () => {
-  const { isSearchFilter, handleChange } = useGetProductsContext();
+  const [isSearchFilter, setIsSearchFilter] = useState<string>('')
+  const [searchResults, setSearchResults] = useState([]);
+  const { GetAllProducts } = useGetProductsContext()
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSearchFilter(event.target.value)
+  }
+  console.log(isSearchFilter)
+
 
   return (
     <Header>
@@ -43,7 +51,7 @@ export const NavegateBar = () => {
         <h1 className={fontTitle.className}>capputeeno</h1>
       </div>
       <NavegateMenu>
-        <SearchInput inputChange={handleChange} inputValue={isSearchFilter} />
+        {/* <SearchInput inputValue={isSearchFilter} inputChange={handleInputChange} /> */}
       </NavegateMenu>
     </Header>
   )

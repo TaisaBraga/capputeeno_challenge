@@ -1,5 +1,5 @@
 import { useGetProductsContext } from '@/context/useGetProductsContext'
-import React from 'react'
+import React, { useDeferredValue } from 'react'
 import { CardContent } from '../molecules/CardContent'
 import styled from 'styled-components'
 
@@ -22,6 +22,7 @@ const CardContentDiv = styled.div`
 
 export const ProductsList = () => {
   const { GetAllProducts, formatMonetaryValue, isReversedList } = useGetProductsContext()
+
 
   return (
     <>
