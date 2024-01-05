@@ -3,7 +3,7 @@ import { GetProductsProvider } from '@/context/useGetProductsContext'
 import styles from './page.module.css'
 import { ApolloProvider } from '@apollo/client'
 import { client } from '@/lib/apollo'
-import ProductDetails from '@/components/organisms/ProductDetails'
+import ProductDetails from '@/components/views/ProductDetails'
 
 export default function ProductDetail() {
   return (

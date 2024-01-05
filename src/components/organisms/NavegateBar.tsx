@@ -1,9 +1,8 @@
 "use client"
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Saira_Stencil_One } from 'next/font/google'
-import { SearchInput } from '../molecules/SearchInput';
 import { useGetProductsContext } from '@/context/useGetProductsContext';
 
 const fontTitle = Saira_Stencil_One({

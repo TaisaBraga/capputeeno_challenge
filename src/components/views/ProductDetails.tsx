@@ -3,18 +3,11 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
 import ShopBag from '../../../public/shop-bag.png'
-import BackArrow from '../../../public/backArrow.png'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { DetailsInfo } from '../organisms/DetailsInfo'
+import { SpanButton } from '../atoms/SpanButton'
+import BackArrow from '../../../public/backArrow.png'
 
-
-const BackDiv = styled.div`
-  cursor: pointer;
-  display: flex;
-  padding: 1em;
-  & span {
-    margin-left: 0.3em;
-  }
-`
 
 const DetailsPage = styled.div`
   align-items: center;
@@ -51,6 +44,7 @@ const TextDiv = styled.div`
 `
 
 const ButtonAdd = styled.button`
+  align-items: center;
   background-color: #115D8C;
   border: none;
   border-radius: 5px;
@@ -73,7 +67,7 @@ const ButtonAdd = styled.button`
 `
 
 const ProductDetails = () => {
-  const { GetProductDetail, formatMonetaryValue, getProductDetail } = useGetProductsContext()
+  const { GetProductDetail, getProductDetail } = useGetProductsContext()
   const router = useRouter()
   const { get } = useSearchParams()
   const productId = get('ProductDetail')
@@ -84,10 +78,12 @@ const ProductDetails = () => {
 
   return (
     <>
-      <BackDiv onClick={() => router.back()}>
-        <Image src={BackArrow} alt='back-arrow-icon' />
-        <span>Voltar</span>
-      </BackDiv>
+      <SpanButton
+        handleFunction={() => router.back()}
+        srcImage={BackArrow}
+        altImage={'back-arrow-button'}
+        textSpan={'Voltar'}
+      />
       <DetailsPage>
         <DetailsCard>
           <ImageDiv>
@@ -101,35 +97,22 @@ const ProductDetails = () => {
             />
           </ImageDiv>
           <TextDiv>
-            <div>
-              <p style={{ fontSize: '1em', color: "color: #41414D" }}>
-                {GetProductDetail?.Product?.category}
-              </p>
-              <p style={{ fontSize: '2em', color: "color: #41414D" }}>
-                {GetProductDetail?.Product?.name}
-              </p>
-              <p style={{ fontSize: '1.25em', fontWeight: "bold", color: "color: #41414D" }}>
-                {formatMonetaryValue(GetProductDetail?.Product?.price_in_cents || '')}
-              </p>
-              <p style={{ fontSize: '0.75em', fontWeight: "light", color: "color: #57575c", paddingTop: '1em', paddingBottom: '4em' }}>
-                *Frete de R$40,00 para todo o Brasil. Grátis para compras acima de R$900,00.
-              </p>
-            </div>
-            <div>
-              <p style={{ color: "color: #41414D", paddingBottom: '0.75em' }}>Descrição</p>
-              <p style={{ color: "color: #41414D", textAlign: 'justify' }}>
-                {GetProductDetail?.Product?.description}
-              </p>
-            </div>
-
+            <DetailsInfo
+              category={GetProductDetail?.Product?.category}
+              name={GetProductDetail?.Product?.name}
+              price_in_cents={GetProductDetail?.Product?.price_in_cents}
+              description={GetProductDetail?.Product?.description}
+            />
             <ButtonAdd>
-              <Image src={ShopBag} alt='shopping-bag-icon' />
-              <p>Adicionar ao carrinho</p>
+              <SpanButton
+                handleFunction={() => { }}
+                srcImage={ShopBag}
+                altImage={'shopping-bag-icon'}
+                textSpan={'Adicionar ao carrinho'}
+              />
             </ButtonAdd>
           </TextDiv>
-
         </DetailsCard>
-
       </DetailsPage>
     </>
   )
