@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
 import ShopBag from '../../../public/shop-bag.png'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { DetailsInfo } from '../organisms/DetailsInfo'
+import { DetailsInfo } from './DetailsInfo'
 import { SpanButton } from '../atoms/SpanButton'
 import BackArrow from '../../../public/backArrow.png'
 

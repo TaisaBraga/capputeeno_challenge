@@ -3,14 +3,14 @@ import { GetProductsProvider } from '@/context/useGetProductsContext'
 import styles from './page.module.css'
 import { ApolloProvider } from '@apollo/client'
 import { client } from '@/lib/apollo'
-import { DetailsPage } from '@/components/views/DetailsPage'
+import { ShopPage } from '@/components/views/ShopPage'
 
-export default function ProductDetail() {
+export default function ShoppingPage() {
   return (
     <ApolloProvider client={client}>
       <GetProductsProvider>
         <main className={styles.main}>
-          <DetailsPage />
+          <ShopPage />
         </main>
       </GetProductsProvider>
     </ApolloProvider>
