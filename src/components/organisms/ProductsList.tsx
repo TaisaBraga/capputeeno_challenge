@@ -1,7 +1,10 @@
 import { useGetProductsContext } from '@/context/useGetProductsContext'
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { CardContent } from '../molecules/CardContent'
 import styled from 'styled-components'
+import { useRouter } from 'next/navigation'
+import { useQuery } from '@apollo/client'
+import { GET_PRODUCT } from '@/hook/useGetProductsDetails'
 
 const CardDiv = styled.div`
   display: flex;
@@ -21,6 +24,7 @@ const CardContentDiv = styled.div`
 
 
 export const ProductsList = () => {
+  const router = useRouter()
   const { GetAllProducts, formatMonetaryValue, isReversedList } = useGetProductsContext()
 
   return (
@@ -34,6 +38,7 @@ export const ProductsList = () => {
                 imageUrl={item?.image_url}
                 name={item?.name}
                 price={formatMonetaryValue(item?.price_in_cents)}
+                handleNavigate={() => router.push(`/ProductDetail/?ProductDetail=${item?.id}`)}
               />
             </CardContentDiv>
           )).reverse()}
@@ -47,6 +52,7 @@ export const ProductsList = () => {
                 imageUrl={item?.image_url}
                 name={item?.name}
                 price={formatMonetaryValue(item?.price_in_cents)}
+                handleNavigate={() => router.push(`/ProductDetail/?ProductDetail=${item?.id}`)}
               />
             </CardContentDiv>
           ))}

@@ -1,6 +1,6 @@
 "use client"
 import useGetAllProductsList, { IGetAllProducts } from "@/hook/useGetAllProductsList";
-import useGetProductsDetails, { IGetProduct } from "@/hook/useGetProductsDetails";
+import useGetProductsDetails, { IGetProduct, useGetProduct } from "@/hook/useGetProductsDetails";
 import { FilterByProducts, FilterPriorityTypes } from "@/types/FilterTypes";
 import { ApolloError } from "@apollo/client";
 import {
@@ -9,13 +9,13 @@ import {
   createContext,
   useCallback,
   useContext,
-  useDeferredValue,
   useEffect,
   useMemo,
   useState
 } from "react";
 
 export interface IGetProductsProps {
+  getProductDetail: useGetProduct
   GetAllProducts: IGetAllProducts | undefined;
   LoadingAllProducts: boolean;
   ErrorAllProducts: ApolloError | undefined;
@@ -55,9 +55,6 @@ export interface IGetProductsProps {
   isReversedList: boolean;
   setIsReversedList: Dispatch<SetStateAction<boolean>>;
 
-  isProductId: string;
-  setIsProductId: Dispatch<SetStateAction<string>>;
-
 }
 
 export const UseGetProductsContext = createContext<IGetProductsProps>(
@@ -76,7 +73,6 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   const [isFilter, setIsFilter] = useState<string | undefined>(undefined)
   const [isSortOrder, setIsSortOrder] = useState<string | undefined>(undefined)
   const [isReversedList, setIsReversedList] = useState<boolean>(false);
-  const [isProductId, setIsProductId] = useState<string>('')
 
   const {
     data: GetAllProducts,
@@ -93,10 +89,11 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
   });
 
   const {
+    getProductDetail,
     data: GetProductDetail,
     loading: LoadingProductDetail,
     error: ErrorProductDetail
-  } = useGetProductsDetails({ variables: { productId: isProductId } })
+  } = useGetProductsDetails()
 
   const formatMonetaryValue = useCallback((number: number | string) => {
     const valueFormatted = number?.toLocaleString('pt-BR', {
@@ -180,6 +177,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       LoadingAllProducts,
       ErrorAllProducts,
       formatMonetaryValue,
+      getProductDetail,
       GetProductDetail,
       LoadingProductDetail,
       ErrorProductDetail,
@@ -205,14 +203,13 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       setIsSortOrder,
       isReversedList,
       setIsReversedList,
-      isProductId,
-      setIsProductId
     }),
     [
       GetAllProducts,
       LoadingAllProducts,
       ErrorAllProducts,
       formatMonetaryValue,
+      getProductDetail,
       GetProductDetail,
       LoadingProductDetail,
       ErrorProductDetail,
@@ -229,7 +226,7 @@ export const GetProductsProvider = ({ children }: React.PropsWithChildren) => {
       isFilter,
       isSortOrder,
       isReversedList,
-      isProductId])
+    ])
 
   return (
     <UseGetProductsContext.Provider value={value}>

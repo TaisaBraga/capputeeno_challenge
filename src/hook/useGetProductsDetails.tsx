@@ -1,4 +1,4 @@
-import { gql, QueryResult, useQuery } from '@apollo/client';
+import { gql, LazyQueryResult, OperationVariables, ApolloError, useLazyQuery } from '@apollo/client';
 
 export const GET_PRODUCT = gql`
 query Query($productId: ID!) {
@@ -26,17 +26,31 @@ export interface IGetProduct {
   Product: IProduct
 }
 
-export type useGetProduct = {
-  variables: {
-    productId: string
-  }
+export type useGetProduct = (
+  productId: string
+) => Promise<LazyQueryResult<IGetProduct, OperationVariables>>;
+
+type UseGetProductsDetails = {
+  getProductDetail: useGetProduct;
+  loading: boolean;
+  error: ApolloError | undefined;
+  data: IGetProduct;
 }
 
-export const useGetProductsDetails = ({
-  variables
-}: useGetProduct): QueryResult<IGetProduct> =>
-  useQuery<IGetProduct>(GET_PRODUCT, {
-    variables,
+export const useGetProductsDetails = (): UseGetProductsDetails => {
+  const [getQuery, { data, loading, error }] = useLazyQuery(GET_PRODUCT, {
+    notifyOnNetworkStatusChange: true
   })
+
+  const getProductDetail = async (
+    productId: string
+  ) => {
+    return await getQuery({
+      variables: { productId }
+    })
+  }
+
+  return { getProductDetail, data, loading, error }
+}
 
 export default useGetProductsDetails;

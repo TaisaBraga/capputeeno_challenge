@@ -1,7 +1,7 @@
 import React from 'react'
 import { CardImage } from '../atoms/CardImage'
 import { styled } from 'styled-components'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
 
 export interface ICardContent {
@@ -9,6 +9,7 @@ export interface ICardContent {
   name: string | '',
   price: string | '',
   id: string | '',
+  handleNavigate: () => void
 }
 
 const CardDiv = styled.div`
@@ -24,19 +25,9 @@ const Divider = styled.div`
 `
 
 export const CardContent = (props: ICardContent) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const productId = searchParams.get(props?.id)
-  const { setIsProductId, isProductId } = useGetProductsContext()
-
-  const handleNavigate = () => {
-    setIsProductId(productId || '')
-    console.log('AQUIII', isProductId)
-    router.push(`/ProductDetail/${isProductId}`)
-  }
 
   return (
-    <CardDiv onClick={handleNavigate} id={props?.id}>
+    <CardDiv onClick={() => props.handleNavigate()} id={props?.id}>
       <CardImage imageUrl={props?.imageUrl} name={props?.name} />
       <p>{props?.name}</p>
       <Divider></Divider>
