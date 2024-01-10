@@ -76,6 +76,10 @@ const ProductDetails = () => {
     getProductDetail(productId || '')
   }, [])
 
+  const handleGetProduct = () => {
+
+  }
+
   return (
     <>
       <SpanButton
@@ -105,7 +109,7 @@ const ProductDetails = () => {
             />
             <ButtonAdd>
               <SpanButton
-                handleFunction={() => { }}
+                handleFunction={() => handleGetProduct()}
                 srcImage={ShopBag}
                 altImage={'shopping-bag-icon'}
                 textSpan={'Adicionar ao carrinho'}
