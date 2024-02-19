@@ -1,8 +1,6 @@
 import React from 'react'
 import { CardImage } from '../atoms/CardImage'
 import { styled } from 'styled-components'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useGetProductsContext } from '@/context/useGetProductsContext'
 
 export interface ICardContent {
   imageUrl: string | '',

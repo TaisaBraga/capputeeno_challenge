@@ -1,10 +1,8 @@
 import { useGetProductsContext } from '@/context/useGetProductsContext'
-import React, { useCallback, useEffect } from 'react'
+import React from 'react'
 import { CardContent } from '../molecules/CardContent'
 import styled from 'styled-components'
 import { useRouter } from 'next/navigation'
-import { useQuery } from '@apollo/client'
-import { GET_PRODUCT } from '@/hook/useGetProductsDetails'
 
 const CardDiv = styled.div`
   display: flex;

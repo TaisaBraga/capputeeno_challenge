@@ -51,7 +51,11 @@ export const NavegateBar = () => {
   return (
     <Header>
       <div>
-        <h1 className={fontTitle.className}>capputeeno</h1>
+        <h1
+          className={fontTitle.className}
+          onClick={() => router.push('/')}
+          style={{ cursor: 'pointer' }}
+        >capputeeno</h1>
       </div>
       <NavegateMenu>
         {/* <SearchInput inputValue={isSearchFilter} inputChange={handleInputChange} /> */}
