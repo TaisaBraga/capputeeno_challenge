@@ -14,6 +14,7 @@ const DetailsPage = styled.div`
   display: flex; 
   flex-direction: column;
   justify-content: center;
+  padding:  1em;
 `
 
 const DetailsCard = styled.div`
@@ -23,9 +24,11 @@ const DetailsCard = styled.div`
     justify-content: center;  
   }
   @media (max-width: 820px) {
-    background-color: blue;
     display: block;
-    justify-content: center;  
+    justify-content: center;
+    padding:  1em;
+    box-sizing: border-box;
+    width: auto;
   }
   
 `
@@ -71,13 +74,30 @@ const ProductDetails = () => {
   const router = useRouter()
   const { get } = useSearchParams()
   const productId = get('ProductDetail')
+  // const { handleGetProduct } = useGetLocalStorageContext();
 
   useEffect(() => {
     getProductDetail(productId || '')
   }, [])
 
   const handleGetProduct = () => {
+    let cartItems = localStorage.getItem('cart-items');
+    if (cartItems) {
+      let cartItemsArray = JSON.parse(cartItems);
 
+      let existingProductIndex = cartItemsArray.findIndex((item: { id: string; }) => item.id === productId);
+
+      if (existingProductIndex != -1) {
+        cartItemsArray[existingProductIndex].quantity += 1;
+      } else {
+        cartItemsArray.push({ ...GetProductDetail, quantity: 1, id: productId })
+      }
+
+      localStorage.setItem('cart-items', JSON.stringify(cartItemsArray));
+    } else {
+      const newCart = [{ ...GetProductDetail, quantity: 1, id: productId }]
+      localStorage.setItem('cart-items', JSON.stringify(newCart));
+    }
   }
 
   return (
