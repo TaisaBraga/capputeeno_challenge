@@ -7,6 +7,7 @@ import { useGetProductsContext } from '@/context/useGetProductsContext';
 import ShopBag from '../../../public/shop-bag.png'
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useLocalStorage } from '@/context/useLocalStorage';
 
 const fontTitle = Saira_Stencil_One({
   weight: ['400'],
@@ -36,8 +37,22 @@ input {
 }
 `
 
+const CartCounter = styled.span`
+    width: 17px;
+    height: 17px;
+    border-radius: 100%;
+    padding: 0 5px;
+    font-size: 10px;
+
+    background-color: red;
+    color: white;
+
+    margin-left: -10px;
+`
+
 export const NavegateBar = () => {
   const router = useRouter()
+  const { value } = useLocalStorage('cart-items', [])
   // const [isSearchFilter, setIsSearchFilter] = useState<string>('')
   // const [searchResults, setSearchResults] = useState([]);
   // const { GetAllProducts } = useGetProductsContext()
@@ -59,12 +74,16 @@ export const NavegateBar = () => {
       </div>
       <NavegateMenu>
         {/* <SearchInput inputValue={isSearchFilter} inputChange={handleInputChange} /> */}
-        <Image
-          src={ShopBag}
-          alt='Shop-Bag-Icon'
-          onClick={() => router.push('/ShoppingPage')}
-          style={{ cursor: 'pointer' }}
-        />
+
+        <div>
+          <Image
+            src={ShopBag}
+            alt='Shop-Bag-Icon'
+            onClick={() => router.push('/ShoppingPage')}
+            style={{ cursor: 'pointer' }}
+          />
+          {value.length > 0 && <CartCounter>{value.length}</CartCounter>}
+        </div>
       </NavegateMenu>
     </Header>
   )
