@@ -1,14 +1,12 @@
 import Image from 'next/image'
 import React from 'react'
-import LitterIcon from '../../../public/litterIcon.png'
+import litterIcon from '../../../public/litterIcon.png'
 import styled from 'styled-components'
+import { IProduct } from '@/hook/useGetProductsDetails'
+import { IGetProducts } from '@/hook/useGetAllProductsList'
 
 interface IShopCardContent {
-  imageUrl: string,
-  imageAtl: string,
-  productName?: string,
-  productDescription?: string,
-  totalValue?: number
+  product: IProduct
 }
 
 const ShopCard = styled.div`
@@ -16,23 +14,28 @@ const ShopCard = styled.div`
  border-radius: 8px;
 `
 
-export const ShopCardContent = ({
-  imageUrl,
-  imageAtl,
-  productName,
-  productDescription,
-  totalValue }: IShopCardContent) => {
+export const ShopCardContent = ({ product }: IShopCardContent) => {
+  if (!product) {
+
+    return null; // ou qualquer outro comportamento desejado quando product não estiver disponível
+  }
+  console.log('!!!!', product)
   return (
     <ShopCard>
-      <Image src={imageUrl} alt={imageAtl} />
+      <Image
+        src={product?.image_url}
+        alt={product?.name}
+        width={100}
+        height={100}
+      />
       <div>
-        <p>{productName}</p>
-        <Image src={LitterIcon} alt='litter Icon' />
+        <p>{product?.name}</p>
+        <Image src={litterIcon} alt='litter Icon' />
       </div>
-      <p>{productDescription}</p>
+      <p>{product?.description}</p>
       <div>
         <p>{ }</p>
-        <p>{totalValue}</p>
+        <p>lalala</p>
       </div>
     </ShopCard>
   )

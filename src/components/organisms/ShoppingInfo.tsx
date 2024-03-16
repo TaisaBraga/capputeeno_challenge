@@ -5,20 +5,19 @@ import BackArrow from '../../../public/backArrow.png'
 import styled from 'styled-components'
 import { ShopCardContent } from '../molecules/ShopCardContent'
 import { useGetProductsContext } from '@/context/useGetProductsContext'
+import { useLocalStorage } from '@/context/useLocalStorage'
+import { IProduct } from '@/hook/useGetProductsDetails'
 
 const DetailsPage = styled.div`
  
 `
 
 export const ShoppingInfo = () => {
-  const { GetProductDetail, getProductDetail } = useGetProductsContext()
-  const { get } = useSearchParams()
-  const productId = get('ProductDetail')
+  const { value } = useLocalStorage<IProduct[]>('cart-items', [])
   const router = useRouter()
 
-  useEffect(() => {
-    getProductDetail(productId || '')
-  }, [])
+  // value?.map(item => console.log(item))
+
 
   return (
     <>
@@ -30,15 +29,23 @@ export const ShoppingInfo = () => {
       />
       <div>
         <p>Seu Carrinho</p>
-        <p>Total {`${1} produtos ${1}`}</p>
+        <p>{value?.length === 1 ? (
+          `Total (${value?.length} produto)  R$ 1,00`
+        ) : (
+          `Total (${value?.length} produtos)  R$ 1,00`
+        )}</p>
       </div>
-      <ShopCardContent
-        imageUrl={GetProductDetail?.Product?.name || ''}
-        imageAtl={GetProductDetail?.Product?.name || ''}
-        productName={GetProductDetail?.Product?.name}
-        productDescription={GetProductDetail?.Product?.description}
-        totalValue={0}
-      />
+      <>
+        {/*o componente abaixo está retornando como undefined*/}
+        {value.length && value.map((item, index) => (
+          <ShopCardContent
+            key={index}
+            product={item}
+          />
+        ))}
+
+      </>
+
     </>
   )
 }

@@ -6,9 +6,13 @@ export function useLocalStorage<T>(item: string, initialValue: T) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     let value = localStorage.getItem(item)
-    if (value) setValue(JSON.parse(value))
+    try {
+      if (value) setValue(JSON.parse(value));
+    } catch (error) {
+      console.error("Parsing error on reading localStorage", error);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window])
+  }, [])
 
   const updateLocalStorage = (newValue: T) => {
     setValue(newValue);
